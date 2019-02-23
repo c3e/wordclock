@@ -23,7 +23,7 @@
 #include <WiFiManager.h>
 
 
-#define NUM_LEDS 42
+#define NUM_LEDS 43
 #define DATA_PIN 5
 
 CRGB leds[NUM_LEDS];
@@ -37,51 +37,52 @@ static const char ntpServerName[] = "pool.ntp.org";
 #define M_IST 1
 #define M_FUENF 2
 #define M_ZEHN 3
-#define M_VIERTEL 4
-#define M_VOR 5
-#define M_NACH 6
+#define M_ZWANZIG 4
+#define M_VIERTEL 5
+#define M_VOR 6
+#define M_NACH 8
 #define M_HALB 7
-#define M_UHR 8
-#define H_EINS 9
-#define H_EIN 9
-#define H_ZWEI 10
-#define H_DREI 11
-#define H_VIER 12
-#define H_FUENF 13
-#define H_SECHS 14
-#define H_SIEBEN 15
+#define M_UHR 21
+#define H_EINS 11
+#define H_ZWEI 12
+#define H_DREI 13
+#define H_VIER 14
+#define H_FUENF 10
+#define H_SECHS 15
+#define H_SIEBEN 17
 #define H_ACHT 16
-#define H_NEUN 17
-#define H_ZEHN 18
-#define H_ELF 19
-#define H_ZWOELF 20
+#define H_NEUN 9
+#define H_ZEHN 19
+#define H_ELF 20
+#define H_ZWOELF 18
 
 TimeChangeRule myDST = {"CEST", Last, Sun, Mar, 2, 120};    //Daylight time = UTC - 4 hours
 TimeChangeRule mySTD = {"CET", Last, Sun, Oct, 2, 60};     //Standard time = UTC - 5 hours
 Timezone myTZ(myDST, mySTD);
 
-int clockWords[21][10] = {
-  {3,-1,-1,-1,-1,-1,-1,-1,-1,-1}, // es 0
-  {2,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // ist 1
-  {0,1,-1,-1,-1,-1,-1,-1,-1,-1},  // fuenf 2
+int clockWords[22][10] = {
+  {0,-1,-1,-1,-1,-1,-1,-1,-1,-1}, // es 0
+  {1,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // ist 1
+  {2,3,-1,-1,-1,-1,-1,-1,-1,-1},  // fuenf 2
   {4,5,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn 3
-  {8,9,10,-1,-1,-1,-1,-1,-1,-1},  // viertel 4
-  {11,12,-1,-1,-1,-1,-1,-1,-1,-1},  // vor 5
-  {6,7,-1,-1,-1,-1,-1,-1,-1,-1},  // nach 6
-  {13,14,-1,-1,-1,-1,-1,-1,-1,-1},  // halb 7
-  {40,41,-1,-1,-1,-1,-1,-1,-1,-1},  // uhr 8
-  {19,20,-1,-1,-1,-1,-1,-1,-1,-1},  // ein 9
-  {21,22,-1,-1,-1,-1,-1,-1,-1,-1},  // zwei 10
-  {25,26,-1,-1,-1,-1,-1,-1,-1,-1},  // drei 11
-  {23,24,-1,-1,-1,-1,-1,-1,-1,-1},  // vier 12
-  {15,16,-1,-1,-1,-1,-1,-1,-1,-1},  // fuenf 13
-  {27,28,-1,-1,-1,-1,-1,-1,-1,-1},  // sechs 14
-  {33,34,35,-1,-1,-1,-1,-1,-1,-1},  // sieben 15
-  {29,30,-1,-1,-1,-1,-1,-1,-1,-1},  // acht 16
-  {17,18,-1,-1,-1,-1,-1,-1,-1,-1},  // neun 17
-  {36,37,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn  18
-  {38,39,-1,-1,-1,-1,-1,-1,-1,-1},  // elf 19
-  {31,32,-1,-1,-1,-1,-1,-1,-1,-1}, // zwölf 20
+  {6,7,8,-1,-1,-1,-1,-1,-1,-1}, //  zwanzig 4
+  {9,10,11,-1,-1,-1,-1,-1,-1,-1},  // viertel 5
+  {12,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // vor 6
+  {13,14,-1,-1,-1,-1,-1,-1,-1,-1},  // nach 8
+  {15,16,-1,-1,-1,-1,-1,-1,-1,-1},  // halb 7
+  {17,18,-1,-1,-1,-1,-1,-1,-1,-1},  // neun 9 
+  {19,20,-1,-1,-1,-1,-1,-1,-1,-1},  // fuenf 10
+  {21,22,-1,-1,-1,-1,-1,-1,-1,-1},  // ein 11
+  {23,24,-1,-1,-1,-1,-1,-1,-1,-1},  // zwei 12
+  {25,26,-1,-1,-1,-1,-1,-1,-1,-1},  // drei 13
+  {27,28,-1,-1,-1,-1,-1,-1,-1,-1},  // vier 14
+  {29,30,-1,-1,-1,-1,-1,-1,-1,-1},  // sechs 15
+  {31,32,-1,-1,-1,-1,-1,-1,-1,-1},  // acht 16
+  {33,34,35,-1,-1,-1,-1,-1,-1,-1},  // sieben 17
+  {36,37,38,-1,-1,-1,-1,-1,-1,-1}, // zwölf 18
+  {39,40,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn 19
+  {41,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // elf 20
+  {42,-1,-1,-1,-1,-1,-1,-1,-1},  // uhr 21
 };
 
 WiFiUDP Udp;
@@ -142,6 +143,13 @@ void digitalClockDisplay()
 void setup()
 {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+  clear();
+  for (int initcount=0; initcount <= NUM_LEDS; initcount++) {
+    clear();
+    leds[initcount] = CHSV((255/NUM_LEDS)*initcount, 255, 128);
+    FastLED.show();
+    delay(100);
+  }
   clear();
   Serial.begin(115200);
   WiFiManager wifiManager;
@@ -264,7 +272,7 @@ void getHourWord()
       // special case to get sigular @ "ein uhr"
       if (int(minute(loctime)) < 5)
       {
-        set_word(H_EIN);
+        set_word(H_EINS);
         Serial.println("ein");
       } else
       {
@@ -372,9 +380,8 @@ void getMinuteWord()
     case 22:
     case 23:
     case 24:
-      set_word(M_ZEHN);
-      set_word(M_VOR);
-      set_word(M_HALB);
+      set_word(M_ZWANZIG);
+      set_word(M_NACH);
       Serial.println("zehn vor halb");
       break;
     case 25:
@@ -410,9 +417,8 @@ void getMinuteWord()
     case 42:
     case 43:
     case 44:
-      set_word(M_ZEHN);
-      set_word(M_NACH);
-      set_word(M_HALB);
+      set_word(M_ZWANZIG);
+      set_word(M_VOR);
       Serial.println("zehn nach halb");
       break;
     case 45:
