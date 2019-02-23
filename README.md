@@ -18,7 +18,7 @@ Die LEDs mit Drahtstücken verlöten, dabei darauf achten, dass alle Leitungen j
 Am Anfang den ESP anlöten:
 * 5V->+5V
 * G->GND
-* D5->Din
+* D1->Din (Pin-Benennung im Quelltext ist etwas anders)
 
 ## Flashen
 1. Dieses Repo clonen (`git clone https://github.com/c3e/wordclock.git`)
