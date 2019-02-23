@@ -22,6 +22,7 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>
 
+#define BRIGHTNESS 200
 
 #define NUM_LEDS 43
 #define DATA_PIN 5
@@ -64,8 +65,8 @@ int clockWords[22][10] = {
   {0,-1,-1,-1,-1,-1,-1,-1,-1,-1}, // es 0
   {1,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // ist 1
   {2,3,-1,-1,-1,-1,-1,-1,-1,-1},  // fuenf 2
-  {7,8,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn 3
-  {4,5,6,-1,-1,-1,-1,-1,-1,-1}, //  zwanzig 4
+  {4,5,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn 3
+  {6,7,8,-1,-1,-1,-1,-1,-1,-1}, //  zwanzig 4
   {9,10,11,-1,-1,-1,-1,-1,-1,-1},  // viertel 5
   {12,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // vor 6
   {13,14,-1,-1,-1,-1,-1,-1,-1,-1},  // nach 8
@@ -80,9 +81,9 @@ int clockWords[22][10] = {
   {31,32,-1,-1,-1,-1,-1,-1,-1,-1},  // acht 16
   {33,34,35,-1,-1,-1,-1,-1,-1,-1},  // sieben 17
   {36,37,38,-1,-1,-1,-1,-1,-1,-1}, // zwölf 18
-  {41,42,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn 19
-  {40,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // elf 20
-  {39,-1,-1,-1,-1,-1,-1,-1,-1},  // uhr 21
+  {39,40,-1,-1,-1,-1,-1,-1,-1,-1},  // zehn 19
+  {41,-1,-1,-1,-1,-1,-1,-1,-1,-1},  // elf 20
+  {42,-1,-1,-1,-1,-1,-1,-1,-1},  // uhr 21
 };
 
 WiFiUDP Udp;
@@ -108,7 +109,7 @@ void noWifi()
 {
   for(int i=0; i<NUM_LEDS; i++)
   {
-    leds[i] = CHSV((255/(NUM_LEDS-1))*i, 255, 128);
+    leds[i] = CHSV((255/(NUM_LEDS-1))*i, 255, BRIGHTNESS);
     FastLED.show();
   }
 }
@@ -146,7 +147,7 @@ void setup()
   clear();
   for (int initcount=0; initcount <= NUM_LEDS; initcount++) {
     clear();
-    leds[initcount] = CHSV((255/NUM_LEDS)*initcount, 255, 128);
+    leds[initcount] = CHSV((255/NUM_LEDS)*initcount, 255, BRIGHTNESS);
     FastLED.show();
     delay(100);
   }
@@ -209,7 +210,7 @@ void set_word(int word, time_t current_time = loctime) {
   {
     if (clockWords[word][i] >= 0)
     {
-      leds[clockWords[word][i]] = CHSV(color, 255, 128);
+      leds[clockWords[word][i]] = CHSV(color, 255, BRIGHTNESS);
       Serial.print(clockWords[word][i]);
       Serial.print("  ");
     }
