@@ -20,6 +20,18 @@ Am Anfang den ESP anlöten:
 * G->GND
 * D1->Din (Pin-Benennung im Quelltext ist etwas anders)
 
+### Material
+* 230 mm x 230 mm Pappe (schwarz) für Wortfolie
+  - -> Wortfolie.dxf verwenden
+* 230 mm x 230 mm Transparentpapier (z.B. für technisches Zeichnen) als Diffusor, alternativ weißes Backpapier
+* min 280 mm x 280 mm MDF für Trennwände
+  - -> Trennwaende_fuer_Laser.dxf verwenden
+  - Zahlen auf der linken Seite nach Möglichkeit nur gravieren oder weglassen
+* Rückwand der Rahmens (CAD-Datei ist passend für "RIBBA" von IKEA)
+  - -> Rueckwand-ohne-Gravuren.dxf (alle Konturen außer der Umrandung ganz ausschneiden) **oder**
+  - -> Rueckwand-mit-Gravuren.dxf (LED-Markierungen und Pfeile nur mit einer Tiefe von ca. 0.2-0.5 mm gravieren) verwenden
+
+
 ## Flashen
 1. Dieses Repo clonen (`git clone https://github.com/c3e/wordclock.git`)
 2. Die Arduino IDE installieren (https://www.arduino.cc/en/Main/Software)
