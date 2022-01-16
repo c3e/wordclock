@@ -22,14 +22,14 @@ Am Anfang den ESP anlöten:
 
 ### Material
 * 230 mm x 230 mm Pappe (schwarz) für Wortfolie
-  - -> Wortfolie.dxf verwenden
+  - -> [Wortfolie.dxf](cad-files/Wortfolie.dxf) verwenden
 * 230 mm x 230 mm Transparentpapier (z.B. für technisches Zeichnen) als Diffusor, alternativ weißes Backpapier
 * min 280 mm x 280 mm MDF für Trennwände
-  - -> Trennwaende_fuer_Laser.dxf verwenden
+  - -> [Trennwaende_fuer_Laser.dxf](cad-files/Trennwaende_fuer_Laser.dxf) verwenden
   - Zahlen auf der linken Seite nach Möglichkeit nur gravieren oder weglassen
 * Rückwand der Rahmens (CAD-Datei ist passend für "RIBBA" von IKEA)
-  - -> Rueckwand-ohne-Gravuren.dxf (alle Konturen außer der Umrandung ganz ausschneiden) **oder**
-  - -> Rueckwand-mit-Gravuren.dxf (LED-Markierungen und Pfeile nur mit einer Tiefe von ca. 0.2-0.5 mm gravieren) verwenden
+  - -> [Rueckwand-ohne-Gravuren.dxf](cad-files/Rueckwand-ohne-Gravuren.dxf) (alle Konturen außer der Umrandung ganz ausschneiden) **oder**
+  - -> [Rueckwand-mit-Gravuren.dxf](cad-files/Rueckwand-mit-Gravuren.dxf) (LED-Markierungen und Pfeile nur mit einer Tiefe von ca. 0.2-0.5 mm gravieren) verwenden
 
 
 ## Flashen
